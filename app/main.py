@@ -48,6 +48,10 @@ def create_app():
     for index,(slug,title) in enumerate(MODULES,1):
         module=importlib.import_module(f"app.modules.m{index}_{slug}.handler")
         application.register_blueprint(module.bp)
+    from app.ingest.handler import bp as ingest_bp
+    from app.ingest.db import ensure_schema
+    application.register_blueprint(ingest_bp)
+    ensure_schema()
     register_pages(application)
     return application
 app=create_app()

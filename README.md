@@ -13,6 +13,7 @@ docker compose exec -T app pytest -q
 
 ## 模块
 
+- 0. 采集水位账：`/watermark`，`/api/ingest/devices`（离线分段补传，水位只认连续到达）。
 - 1. 刷卡采信：`/taps`，`/api/taps`。
 - 2. 线路换乘：`/routes`，`/api/routes`。
 - 3. 票价版本：`/fares`，`/api/fares`。

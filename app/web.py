@@ -1,8 +1,23 @@
-from flask import render_template
+from flask import render_template,request
 from app.config import MODULES,TITLE,SHORT
 from app.pipeline import execute,load_sample
 from app import store
 def register_pages(app):
+    def watermark_page():
+        from decimal import Decimal
+        from app.ingest.service import list_devices
+        from app.ingest.demo import seed_demo
+        devices=list_devices()
+        if not devices: seed_demo();devices=list_devices()
+        ns_confirmed=str(sum((Decimal(d["receivables"]["metrics"]["confirmed_total"]) for d in devices),Decimal(0)))
+        ns_exposure=str(sum((Decimal(d["receivables"]["metrics"]["pending_exposure"]) for d in devices),Decimal(0)))
+        ns_pending_segments=sum(len(d["pending_segments"]) for d in devices)
+        ns_gap_segments=sum(b-a+1 for d in devices for a,b in d["gap_ranges"])
+        return render_template("watermark.html",title=TITLE,short=SHORT,modules=MODULES,index=-1,
+                               devices=devices,selected_id=request.args.get("device",devices[0]["device_id"]),
+                               ns_confirmed=ns_confirmed,ns_exposure=ns_exposure,
+                               ns_pending_segments=ns_pending_segments,ns_gap_segments=ns_gap_segments)
+    app.add_url_rule("/watermark",view_func=watermark_page)
     def page(index):
         run=store.latest() or execute(load_sample("dirty.csv"))
         stage=run["stages"][index]

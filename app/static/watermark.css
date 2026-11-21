@@ -1,0 +1,11 @@
+.gap-banner{background:#fbeaea;color:var(--bad);border:1px solid #e4b7b9;padding:9px 11px;margin-bottom:10px}
+.gap-banner b{font-family:var(--mono)}
+.ok-banner{background:#e9f5ee;color:var(--ok);border:1px solid #b6dcc5;padding:9px 11px;margin-bottom:10px}
+.seg-strip{display:flex;flex-wrap:wrap;gap:6px}
+.seg{display:inline-block;min-width:42px;text-align:center;padding:7px 9px;font:12px var(--mono);border:1px solid var(--line)}
+.seg--ok{background:#e9f5ee;color:var(--ok);border-color:#9ecfb2}
+.seg--pending{background:#fff7e6;color:var(--warn);border-color:#e3c98f}
+.seg--gap{background:#fbeaea;color:var(--bad);border-color:#e4b7b9}
+.mono-cell{text-align:left!important}
+.device{display:grid;gap:12px}
+.kpi .bad{color:#ffd9d9}
